@@ -1,70 +1,97 @@
-# Getting Started with Create React App
+LEI-Based Merchant Payments PoC
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Overview
+A Proof-of-Concept (PoC) demonstrating merchant payments using Legal Entity Identifiers (LEI) with QR code technology, developed for the Mojaloop Foundation's financial inclusion initiatives.
 
-## Available Scripts
+Features
+Merchant Management
+✅ LEI validation against GLEIF database
 
-In the project directory, you can run:
+✅ Merchant registration with business details
 
-### `npm start`
+✅ QR code generation for each merchant
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+✅ Merchant directory listing
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Payment Processing
+💳 QR code scanning for payment initiation
 
-### `npm test`
+🔄 Real-time payment status tracking
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+📜 Complete payment history
 
-### `npm run build`
+💱 Multi-currency support (USD, EUR, GBP, KES)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Technical Highlights
+🌐 RESTful API backend
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+⚛️ React frontend with Material-UI
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+🔐 Secure payment processing
 
-### `npm run eject`
+📱 Fully responsive design
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+graph TD
+    A[Frontend] -->|API Calls| B[Backend]
+    B -->|LEI Validation| C[GLEIF API]
+    B -->|Payment Processing| D[Mojaloop Switch]
+    B --> E[(MongoDB)]
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Prerequisites
+Node.js 16+
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+MongoDB 4.4+
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Yarn or npm
 
-## Learn More
+Git
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Installation
+Backend Setup
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Clone repository
+git clone https://github.com/your-repo/lei-merchant-payments.git
+cd lei-merchant-payments/backend
 
-### Code Splitting
+# Install dependencies
+npm install
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+# Configure environment (copy and edit)
+cp config/default.example.json config/default.json
 
-### Analyzing the Bundle Size
+# Start server
+node index.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Frontend Setup
 
-### Making a Progressive Web App
+cd ../frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+# Install dependencies
+npm install
 
-### Advanced Configuration
+# Start development server
+npm start
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Configuration
+Backend (config/default.json)
 
-### Deployment
+{
+  "server": {
+    "port": 3000,
+    "host": "0.0.0.0"
+  },
+  "mojaloop": {
+    "dfspId": "merchantdfsp",
+    "currency": "USD",
+    "endpoint": "http://localhost:4000",
+    "oauthToken": "your-oauth-token"
+  },
+  "lei": {
+    "validationEndpoint": "https://leilookup.gleif.org/api/v2/leirecords",
+    "cacheTTL": 86400
+  },
+  "database": {
+    "url": "mongodb://localhost:27017/lei-merchant-payments"
+  }
+}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
